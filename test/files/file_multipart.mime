@@ -1,0 +1,15 @@
+Media multipart posting
+--END_OF_PART
+Content-Type: application/atom+xml
+
+<entry xmlns='http://www.w3.org/2005/Atom'>
+  <title type="text">Multipart Title</title>
+  <content type="text">Multipart Description</content>
+</entry>
+--END_OF_PART
+Content-Type: text/plain
+
+Multipart Content
+--END_OF_PART--
+
+

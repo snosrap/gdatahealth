@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom'>
+  <ContinuityOfCareRecord xmlns='urn:astm-org:CCR'>
+    <Body>
+      <Medications>
+        <Medication>
+          <DateTime>
+            <Type>
+              <Text>Prescription Date</Text>
+            </Type>
+            <ExactDateTime>2007-03-09T12:00:00Z</ExactDateTime>
+          </DateTime>
+          <Type>
+            <Text>Medication</Text>
+          </Type>
+          <Source>
+            <Actor>
+              <ActorID>Rx History Supplier</ActorID>
+            </Actor>
+          </Source>
+          <Product>
+            <ProductName>
+              <Text>TIZANIDINE HCL 4 MG TABLET TEV</Text>
+              <Code>
+                <Value>-1</Value>
+                <CodingSystem>omi-coding</CodingSystem>
+                <Version>2005</Version>
+              </Code>
+            </ProductName>
+            <Form>
+              <Text>TAKE 1 TABLET BY MOUTH AT BEDTIME AS NEEDED FOR MUSCLE SPASM</Text>
+            </Form>
+          </Product>
+          <Quantity>
+            <Value>1</Value>
+          </Quantity>
+        </Medication>
+      </Medications>
+    </Body>
+  </ContinuityOfCareRecord>
+</entry>
