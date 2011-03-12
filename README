@@ -1,0 +1,7 @@
+GData Health
+
+GData Health is an open-source implementation of the Google Health GData API, running on Google App Engine.
+
+GData Health runs at https://gdatahealth.appspot.com/
+
+Source code is released under the Apache License.
