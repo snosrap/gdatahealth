@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:ccr="urn:astm-org:CCR">
+  <category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/health/kinds#profile" />
+  <id>{{ request.path_url }}</id>
+  <title type="text">Profile Feed</title>
+  <link href="{{ request.path_url }}" rel="http://schemas.google.com/g/2005#feed" type="application/atom+xml" />
+  <link href="{{ request.path_url }}" rel="http://schemas.google.com/g/2005#post" type="application/atom+xml" />
+  {% if 0 %}<link href="{{ request.path_url }}/batch" rel="http://schemas.google.com/g/2005#batch" type="application/atom+xml" />{% endif %}
+  <link href="{{ request.path_url }}" rel="self" type="application/atom+xml" />
+  <updated>{{ updated }}Z</updated>
+  {% if totalResults %}<openSearch:totalResults>{{ totalResults }}</openSearch:totalResults>{% endif %}
+{% for entry in entries %}
+  <entry>
+    <category term="{{ entry.category_ccr }}" />
+    <category scheme="http://schemas.google.com/health/item" term="{{ entry.category_item }}" />
+    <category scheme="http://schemas.google.com/g/2005#kind" term="{{ entry.category_kind }}" />
+    <id>{{ request.path_url }}/{{ entry.key.id_or_name }}</id>
+    <author>
+      <name>{{ entry.account.name }}</name>
+      <email>{{ entry.account.email }}</email>
+    </author>
+    <updated>{{ entry.updated }}</updated>
+    <published>{{ entry.created }}</published>
+    {% if entry.ccr %}{{ entry.ccr }}{% endif %}
+    <title type="text">{{ entry.category_item }}</title>
+    <link href="{{ request.path_url }}/-/{{ entry.category_ccr|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fhealth%2Fitem%7D{{ entry.category_item|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fg%2F2005%23kind%7D{{ entry.category_kind|urlencode }}" rel="http://schemas.google.com/health/data#complete" type="application/atom+xml" />
+    <link href="{{ request.path_url }}/{{ entry.key.id_or_name }}" rel="self" type="application/atom+xml" />
+    <link href="{{ request.path_url }}/{{ entry.key.id_or_name }}" rel="edit" type="application/atom+xml" />
+    <metadata:ProfileMetaData xmlns:metadata="http://schemas.google.com/health/metadata">
+    {% for note in entry.healthentrynote_set %}
+        <UserComment type="text" src="IRI" key="{{ note.key.id_or_name }}" updated="{{ note.updated }}">{{ note.text|escape }}</UserComment>
+    {% endfor %}
+    </metadata:ProfileMetaData>
+  </entry>
+{% endfor %}
+</feed>

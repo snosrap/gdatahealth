@@ -1,0 +1,64 @@
+<title>Admin</title>
+
+<style>
+li form{display:inline;}
+</style>
+
+<h1>accounts</h1>
+{% for x in accounts %}
+<li><form method="post"><input type="hidden" name="model" value="Account"><input type="hidden" name="key" value="{{ x.key }}"><input type="submit" value="Delete"></form> <tt>{{ x.key.id_or_name }}</tt> {{ x.email }}{%ifnotequal x.email x.name%} ({{ x.name }}){%endifnotequal%} <a href="/health/feeds/profile/list?auth={{ x.accounttoken_set.0.token }}" title="{{ x.key.id_or_name }}">/profile/list</a></li>
+{% endfor %}
+<form method="post"><input type="hidden" name="model" value="Account"><input name="email" placeholder="email"><input name="passwd" placeholder="passwd"><input name="name" placeholder="name"><input type="submit"></form>
+
+<h1>tokens</h1>
+{% for x in tokens %}
+<li><form method="post"><input type="hidden" name="model" value="AccountToken"><input type="hidden" name="key" value="{{ x.key }}"><input type="submit" value="Delete"></form> <tt>{{ x.key.id_or_name }}</tt> {{ x.account.email }} <!--a href="/health/feeds/profile/list?auth={{ x.token }}" title="{{ x.key.id_or_name }}">{{ x.token }}</a--> {{ x.service }} {{ x.expires|date }}</li>
+{% endfor %}
+<form method="post"><input type="hidden" name="model" value="AccountToken">
+<select name="account_key">{% for a in accounts %}<option value="{{ a.key }}">{{ a.email }}</option>{% endfor %}</select>
+<input name="service" placeholder="service"><input type="submit"></form>
+
+<h1>profiles</h1>
+{% for x in profiles %}
+<li><form method="post"><input type="hidden" name="model" value="Profile"><input type="hidden" name="key" value="{{ x.key }}"><input type="submit" value="Delete"></form> <tt>{{ x.key.id_or_name }}</tt> {{ x.account.email }} {{ x.name }} <a href="/health/feeds/profile/ui/{{ x.key.id_or_name }}?auth={{ x.account.accounttoken_set.0.token }}">/profile/ui/{{ x.key.id_or_name }}</a></li>
+{% endfor %}
+<form method="post"><input type="hidden" name="model" value="Profile"><select name="account_key">{% for a in accounts %}<option value="{{ a.key }}">{{ a.email }}</option>{% endfor %}</select><input name="name" placeholder="name"><input type="submit"></form>
+
+<h1>entries</h1>
+{% for x in entries %}
+<li><form method="post"><input type="hidden" name="model" value="Health"><input type="hidden" name="key" value="{{ x.key }}"><input type="submit" value="Delete"></form> <tt>{{ x.key.id_or_name }}</tt> {{ x.profile.name }} {{ x.category_ccr }} {{ x.category_item }} <a href="/health/feeds/profile/ui/{{ x.profile.key.id_or_name }}/{{ x.key.id_or_name }}?auth={{ x.account.accounttoken_set.0.token }}">/profile/ui/{{ x.profile.key.id_or_name }}/{{ x.key.id_or_name }}</a></li>
+{% endfor %}
+<form method="post"><input type="hidden" name="model" value="Health"><select name="profile_key">{% for p in profiles %}<option value="{{ p.key }}">{{ p.name }}</option>{% endfor %}</select><input name="category_ccr" placeholder="category_ccr"><input name="category_item" placeholder="category_item"><input type="submit"></form>
+
+<h1>files</h1>
+{% for x in files %}
+<li><form method="post"><input type="hidden" name="model" value="File"><input type="hidden" name="key" value="{{ x.key }}"><input type="submit" value="Delete"></form> <tt>{{ x.key.id_or_name }}</tt> {{ x.title }}
+<a href="/health/feeds/profile/ui/{{ x.profile.key.id_or_name }}/files/{{ x.key.id_or_name }}?auth={{ x.account.accounttoken_set.0.token }}">/profile/ui/{{ x.profile.key.id_or_name }}/files/{{ x.key.id_or_name }}</a>
+&nbsp;
+<a href="/health/feeds/profile/ui/{{ x.profile.key.id_or_name }}/files/{{ x.key.id_or_name }}/content?auth={{ x.account.accounttoken_set.0.token }}">/content</a></li>
+{% endfor %}
+
+<form method="post"><input type="hidden" name="model" value="File"><select name="profile_key">{% for p in profiles %}<option value="{{ p.key }}">{{ p.name }}</option>{% endfor %}</select><input name="title" placeholder="title"><input type="submit"></form>
+
+
+<!--
+<h1>notes</h1>
+{% for x in notes %}
+<li><form method="post"><input type="hidden" name="model" value="HealthNote"><input type="hidden" name="key" value="{{ x.key }}"><input type="submit" value="Delete"></form>{{ x.text }}</li>
+{% endfor %}
+<form method="post"><input type="hidden" name="model" value="HealthNote">
+<select name="health_key">{% for a in entries %}<option value="{{ a.key }}">{{ a.profile.name }}'s {{ a.category_item }}</option>{% endfor %}</select>
+<input name="text" placeholder="text">
+<input type="submit"></form>
+-->
+
+<!--
+<h1>shares</h1>
+{% for x in shares %}
+<li><form method="post"><input type="hidden" name="model" value="ProfileShare"><input type="hidden" name="key" value="{{ x.key }}"><input type="submit" value="Delete"></form>FROM: {{ x.account.email }} {{ x.profile.name }} TO: {{ x.to_account.email }}</li>
+{% endfor %}
+<form method="post"><input type="hidden" name="model" value="ProfileShare">
+Share <select name="profile_key">{% for p in profiles %}<option value="{{ p.key }}">{{ p.account.email }}'s {{ p.name }}</option>{% endfor %}</select>
+With <select name="account_key">{% for a in accounts %}<option value="{{ a.key }}">{{ a.email }}</option>{% endfor %}</select>
+<input type="submit"></form>
+-->

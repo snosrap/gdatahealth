@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns="http://www.w3.org/2005/Atom">
+    <category term="{{ entry.category_ccr }}" />
+    <category scheme="http://schemas.google.com/health/item" term="{{ entry.category_item }}" />
+    <category scheme="http://schemas.google.com/g/2005#kind" term="{{ entry.category_kind }}" />
+    <id>{{ request.host_url }}/health/feeds/profile/ui/{{ entry.profile.key.id_or_name }}/{{ entry.key.id_or_name }}</id>
+    <author>
+      <name>{{ entry.account.name }}</name>
+      <email>{{ entry.account.email }}</email>
+    </author>
+    <updated>{{ entry.updated }}</updated>
+    <published>{{ entry.created }}</published>
+    {% if entry.ccr %}{{ entry.ccr }}{% endif %}
+    <title type="text">{{ entry.category_item }}</title>
+    <link href="{{ request.path_url }}/-/{{ entry.category_ccr|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fhealth%2Fitem%7D{{ entry.category_item|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fg%2F2005%23kind%7D{{ entry.category_kind|urlencode }}" rel="http://schemas.google.com/health/data#complete" type="application/atom+xml" />
+    <link href="{{ request.path_url }}" rel="self" type="application/atom+xml" />
+    <link href="{{ request.path_url }}" rel="edit" type="application/atom+xml" />
+    <metadata:ProfileMetaData xmlns:metadata="http://schemas.google.com/health/metadata">
+    {% for note in entry.healthentrynote_set %}
+        <UserComment type="text" src="IRI" key="{{ note.key.id_or_name }}" updated="{{ note.updated }}">{{ note.text|escape }}</UserComment>
+    {% endfor %}
+    </metadata:ProfileMetaData>
+</entry>

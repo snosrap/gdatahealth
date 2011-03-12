@@ -1,0 +1,17 @@
+<html>
+    <head>
+    	<title>Create Account</title>
+    </head>
+    <body>
+    	<p>Thanks, your GData Health account was created.</p>
+    	
+    	<p>You can start interacting with your health profiles using the command line.</p>
+    	
+        <pre>
+$ AUTH=`curl --data "Email=$EMAIL&Passwd=$PASSWORD&service=health" "https://gdatahealth.appspot.com/accounts/ClientLogin" | grep Auth | cut -d'=' -f2`
+$ curl --header "Authorization: auth=$AUTH" "https://gdatahealth.appspot.com/health/feeds/profile/list"</pre>
+
+        <p>Most of the functionality described at the <a href="http://code.google.com/apis/health/docs/2.0/reference.html#ClientLoginFeeds">Google Health API documentation page</a> will work with GData Health.</p>
+
+    </body>
+</html>

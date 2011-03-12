@@ -1,0 +1,34 @@
+<html>
+    <head>
+    	<title>New Account</title>
+    	<link rel="stylesheet" type="text/css" href="/static/health.css">
+    	<style>
+            body,input{font-family:Helvetica;font-size:16px;}
+            th{text-align:left;}
+            input{width:200px;}
+            table,td{padding:5px;}
+    	</style>
+    </head>
+    <body>
+    	<form id="form" name="form" action="CreateAccount" method="POST">
+    	    <table>
+    	    	<tr>
+    	    		<th><label for="Email">Your current email address:</label></th>
+    	    		<td><input type="email" name="Email" id="Email" /></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<th><label for="Passwd">Choose a password:</label></th>
+    	    		<td><input type="password" name="Passwd" id="Passwd" /></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<th><label for="PasswdAgain">Re-enter password:</label></th>
+    	    		<td><input type="password" name="PasswdAgain" id="PasswdAgain" /></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<th>&nbsp;</th>
+    	    		<td><input type="submit" value="Create my account." /></td>
+    	    	</tr>
+    	    </table>        	
+    	</form>
+    </body>
+</html>

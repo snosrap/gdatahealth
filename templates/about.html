@@ -1,0 +1,199 @@
+<html>
+    <head>
+    	<title>GData Health</title>
+<!--     	<link rel="stylesheet" type="text/css" href="/static/health.css">
+ -->
+    	<style>
+            body,input{font-family:Helvetica;font-size:16px;}
+            th{text-align:left;}
+            table.features{border:1px solid #ddd;padding:0px;margin:0px}
+            table.features tr th{padding:5px;background-color:#eef}
+            table.features tr td{padding:5px;margin:0px}
+            input{width:200px;}
+            table,td{padding:5px;}
+            pre{background-color:#eee;color:#060;padding:2px;margin:2px;border:1px solid #ddd;font-size:14px}
+            tt{padding:2px;margin:2px;font-weight:bold;font-size:14px}
+            h2{padding:0px;margin:0px}
+            h3{background-color:#eef;padding:5px}
+            .subtitle{padding:0px;margin:0px;color:#888;font-style:italic}
+            h2 a{color:#000;text-decoration:none}
+            .red{color:red}
+            .blue{color:blue}
+            .g{color:green}
+    	</style>
+    </head>
+    <body>
+        <h2><a href="/">GData Health</a></h2>
+        <p class="subtitle">The Google Health API on App Engine</p>
+        
+        <h3>Overview</h3>
+        
+        <p><b>GData Health</b> is an open-source implementation of the <a href="http://code.google.com/apis/health/docs/2.0/reference.html">Google Health GData API</a>, running on Google App Engine.</p>
+        
+        <p>Create a <b>GData Health</b> account <a href="/accounts/NewAccount">here</a>.</p>
+        
+        <h3>Rationale</h3>
+        
+        <p>The Google Health API <a href="http://code.google.com/p/gdata-issues/issues/list?q=label:API-Health">doesn't get much love</a>.  <b>GData Health</b> is a way to explore how new features could be added to the Google Health API in a scalable way.</p>
+        <p>For example, <b>GData Health</b> supports profile management, a feature that has been queued <a href="http://code.google.com/p/gdata-issues/issues/detail?id=1271">for some time</a> on Google Health.  File attachments are also supported through the <b>GData Health</b> API, <a href="http://code.google.com/p/gdata-issues/issues/detail?id=616">but are not yet available</a> on Google Health.</p>
+
+        <h3>Examples</h3>
+        
+        <p>The API works just like <a href="http://code.google.com/apis/health/docs/2.0/developers_guide_protocol.html#ClientLogin">Google Health ClientLogin</a>, but uses <tt>https://gdatahealth.appspot.com</tt> instead of <tt>https://www.google.com</tt> for all the API calls.</p>
+        
+        <p>The following table summarizes supported operations.  <span class="g">Green</span> operations are available in <b>GData Health</b>, but not <a href="http://code.google.com/apis/health/docs/2.0/reference.html#Authentication">Google Health</a></p>
+        <table cellpadding="0" cellspacing="0" border="0" class="features">
+        	<tr>
+        		<th>Feed URL Suffix</th>
+        		<th>ClientLogin</th>
+        		<th>Note</th>
+        	</tr>
+        	<tr>
+        		<td>register/ui/<em>profileID</em></td>
+        		<td>GET POST PUT DELETE</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<td>profile/ui/<em>profileID</em></td>
+        		<td>GET POST PUT DELETE</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<td>profile/list</td>
+        		<td>GET <span class="g">POST PUT</span></td>
+        		<td>Enables <a href="http://code.google.com/p/gdata-issues/issues/detail?id=1271">profile management (issue: 1271)</a></td>
+        	</tr>
+        	<tr>
+        		<td>profile/list/<em>profileID</em></td>
+        		<td>GET <span class="g">POST PUT DELETE</span></td>
+        		<td>Enables <a href="http://code.google.com/p/gdata-issues/issues/detail?id=1271">profile management (issue: 1271)</a></td>
+        	</tr>
+        	<tr>
+        		<td><span class="g">profile/list/<em>profileID</em>/files</span></td>
+        		<td><span class="g">GET POST PUT</span></td>
+        		<td>Enables <a href="http://code.google.com/p/gdata-issues/issues/detail?id=616">attachment support (issue: 616)</a></td>
+        	</tr>
+        	<tr>
+        		<td><span class="g">profile/list/<em>profileID</em>/files/<em>fileID</em></span></td>
+        		<td><span class="g">GET POST PUT DELETE</span></td>
+        		<td>Enables <a href="http://code.google.com/p/gdata-issues/issues/detail?id=616">attachment support (issue: 616)</a></td>
+        	</tr>
+        	<tr>
+        		<td><span class="g">profile/list/<em>profileID</em>/files/<em>fileID</em>/content</span></td>
+        		<td><span class="g">GET</span></td>
+        		<td>Enables <a href="http://code.google.com/p/gdata-issues/issues/detail?id=616">attachment support (issue: 616)</a></td>
+        	</tr>
+        </table>
+        
+        
+        <h4>Login</h4>
+        <pre>$ AUTH=`curl --data "Email=<span class="red">$EMAIL</span>&Passwd=<span class="red">$PASSWORD</span>" "https://gdatahealth.appspot.com/accounts/ClientLogin" | grep Auth | cut -d'=' -f2`</pre>
+
+        <h4>List Profiles</h4>
+        <pre>$ curl --header "Authorization: GoogleLogin auth=<span class="red">$AUTH</span>" "https://gdatahealth.appspot.com/health/feeds/<span class="blue">profile/list</span>"</pre>
+
+        <h4>Retrieve a Profile's Health Entries</h4>
+        <pre>$ curl --header "Authorization: GoogleLogin auth=<span class="red">$AUTH</span>" "https://gdatahealth.appspot.com/health/feeds/<span class="blue">profile/ui</span>/<span class="red">$PROFILEID</span>"</pre>
+
+        <h4>Search a Profile's Health Entries</h4>
+        <pre>$ curl --header "Authorization: GoogleLogin auth=<span class="red">$AUTH</span>" "https://gdatahealth.appspot.com/health/feeds/profile/ui/<span class="red">$PROFILEID</span>?q=<span class="blue">Tylenol</span>"</pre>
+        
+<!--
+        <p>Login by <tt>POST</tt>ing to <tt><a href="https://gdatahealth.appspot.com/accounts/ClientLogin">https://gdatahealth.appspot.com/accounts/ClientLogin</a></tt>.  You'll obviously need <a href="/accounts/NewAccount">an account</a> first.</p>
+        <p>Retrieve the <tt>Auth</tt> token and list your health profiles by <tt>GET</tt>ting <tt><a href="https://gdatahealth.appspot.com/health/feeds/profile/list">https://gdatahealth.appspot.com/health/feeds/profile/list</a></tt>.</p>
+        <p>Search and create health entries by <tt>GET</tt>ing or <tt>POST</tt>ing to <tt><a href="https://gdatahealth.appspot.com/health/feeds/profile/ui/XXX">https://gdatahealth.appspot.com/health/feeds/profile/ui/XXX</a></tt>, where "XXX" is the profileId.</p>
+-->
+<!--
+        <p>
+        The following health query parameters are supported:
+        <ul>
+        <li>updated-min</li>
+        <li>updated-max</li>
+        <li>published-min</li>
+        <li>published-max</li>
+        <li>q</li>
+        <li>category</li>
+        <li>max-results</li>
+        <li>start-index</li>
+        </ul>
+        Learn more about Health query parameters at <a href="http://code.google.com/apis/health/docs/2.0/reference.html#Parameters">the Google Health API documentation</a>.
+        </p>
+-->
+
+        <h4>Add to a Profile's Health Entries</h4>
+        <pre>$ curl --header "Authorization: GoogleLogin auth=<span class="red">$AUTH</span>" --request POST --header "Content-Type: application/atom+xml" \
+  --data-binary "@<span class="blue">entry_medication_Tizan.xml</span>" "https://gdatahealth.appspot.com/health/feeds/profile/ui/<span class="red">$PROFILEID</span>"</pre>
+        
+        <p><tt>entry_medication_Tizan.xml</tt> file contents:
+        <pre>&lt;?xml version='1.0' encoding='utf-8'?&gt;
+&lt;entry xmlns='http://www.w3.org/2005/Atom'&gt;
+  &lt;ContinuityOfCareRecord xmlns='urn:astm-org:CCR'&gt;
+    &lt;Body&gt;
+      &lt;Medications&gt;
+        &lt;Medication&gt;
+          &lt;DateTime&gt;
+            &lt;Type&gt;
+              &lt;Text&gt;Prescription Date&lt;/Text&gt;
+            &lt;/Type&gt;
+            &lt;ExactDateTime&gt;2007-03-09T12:00:00Z&lt;/ExactDateTime&gt;
+          &lt;/DateTime&gt;
+          &lt;Type&gt;
+            &lt;Text&gt;Medication&lt;/Text&gt;
+          &lt;/Type&gt;
+          &lt;Source&gt;
+            &lt;Actor&gt;
+              &lt;ActorID&gt;Rx History Supplier&lt;/ActorID&gt;
+            &lt;/Actor&gt;
+          &lt;/Source&gt;
+          &lt;Product&gt;
+            &lt;ProductName&gt;
+              &lt;Text&gt;TIZANIDINE HCL 4 MG TABLET TEV&lt;/Text&gt;
+              &lt;Code&gt;
+                &lt;Value&gt;-1&lt;/Value&gt;
+                &lt;CodingSystem&gt;omi-coding&lt;/CodingSystem&gt;
+                &lt;Version&gt;2005&lt;/Version&gt;
+              &lt;/Code&gt;
+            &lt;/ProductName&gt;
+            &lt;Form&gt;
+              &lt;Text&gt;TAKE 1 TABLET BY MOUTH AT BEDTIME AS NEEDED FOR MUSCLE SPASM&lt;/Text&gt;
+            &lt;/Form&gt;
+          &lt;/Product&gt;
+          &lt;Quantity&gt;
+            &lt;Value&gt;1&lt;/Value&gt;
+          &lt;/Quantity&gt;
+        &lt;/Medication&gt;
+      &lt;/Medications&gt;
+    &lt;/Body&gt;
+  &lt;/ContinuityOfCareRecord&gt;
+&lt;/entry&gt;
+</pre></p>
+
+        <h4>Add to a Profile's Files (Simple)</h4>
+        <pre>$ curl --header "Authorization: GoogleLogin auth=<span class="red">$AUTH</span>" --request POST --header "Content-Type: <span class="blue">image/png</span>" \
+  --data-binary "@<span class="blue">image.png</span>" --header "Slug: <span class="blue">Image Title</span>" "https://gdatahealth.appspot.com/health/feeds/profile/ui/<span class="red">$PROFILEID</span>/<span class="blue">files</span>"</pre>
+        
+
+        <h4>Add to a Profile's Files (With MIME Metadata, similar to <a href="http://code.google.com/apis/picasaweb/docs/2.0/developers_guide_protocol.html#PostPhotoWithMetadata">Picasa</a>)</h4>
+        <pre>$ curl --header "Authorization: GoogleLogin auth=<span class="red">$AUTH</span>" --request POST --header "Content-Type: <span class="blue">multipart/related; boundary=\"END_OF_PART\"</span>" \
+  --data-binary "@<span class="blue">multipart.mime</span>" "https://gdatahealth.appspot.com/health/feeds/profile/ui/<span class="red">$PROFILEID</span>/<span class="blue">files</span>"</pre>
+        
+        <p><tt>multipart.mime</tt> file contents:
+        <pre>Media multipart posting
+--END_OF_PART
+Content-Type: application/atom+xml
+
+&lt;entry xmlns='http://www.w3.org/2005/Atom'>
+  &lt;title type="text">Multipart Title&lt;/title>
+  &lt;content type="text">Multipart Description&lt;/content>
+&lt;/entry>
+--END_OF_PART
+Content-Type: text/plain
+
+Multipart Content
+--END_OF_PART--
+</pre></p>
+        
+        <p>&nbsp;</p>
+        
+    </body>
+</html>

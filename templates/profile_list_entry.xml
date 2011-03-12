@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns="http://www.w3.org/2005/Atom">
+    <id>{{ request.host_url }}/health/feeds/profile/list/{{ profile.key.id_or_name }}</id>
+    {% if profile.author %}
+    <author><name>{{ profile.author }}</name></author>
+    {% endif %}
+    <content type="text">{{ profile.key.id_or_name }}</content>
+    <updated>{{ profile.updated }}</updated>
+    <title type="text">{{ profile.name }}</title>
+    <link href="{{ request.path_url }}" rel="self" type="application/atom+xml" />
+    <link href="{{ request.path_url }}" rel="edit" type="application/atom+xml" />
+</entry>

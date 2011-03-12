@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>{{ request.path_url }}</id>
+  <title type="text">Files Feed</title>
+  <link href="{{ request.path_url }}" rel="http://schemas.google.com/g/2005#feed" type="application/atom+xml" />
+  <link href="{{ request.path_url }}" rel="http://schemas.google.com/g/2005#post" type="application/atom+xml" />
+  <link href="{{ request.path_url }}" rel="self" type="application/atom+xml" />
+  <updated>{{ updated }}Z</updated>
+{% for file in files %}
+  <entry>
+    <id>{{ request.path_url }}/{{ file.key }}</id>
+    <title type="text">{{ file.title }}</title>
+    {% if file.description %}<content type="text">{{ file.description }}</content>{% endif %}
+	{% if file.author %}<author><name>{{ file.author }}</name></author>{% endif %}
+    <updated>{{ file.updated }}</updated>
+    <link href="{{ request.path_url }}/{{ file.key.id_or_name }}/content" rel="enclosure" type="{{ file.mime }}" length="{{ file.file|length }}" />
+    <link href="{{ request.path_url }}/{{ file.key.id_or_name }}" rel="self" type="application/atom+xml" />
+    <link href="{{ request.path_url }}/{{ file.key.id_or_name }}" rel="edit" type="application/atom+xml" />
+  </entry>
+{% endfor %}
+</feed>
