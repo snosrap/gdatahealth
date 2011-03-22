@@ -22,6 +22,9 @@ handlers:
 - url: /health/feeds/.*
   script: feeds.py
 
+- url: /health/p.*
+  script: profiles.py
+
 - url: /admin
   script: admin.py
 

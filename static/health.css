@@ -1,0 +1,36 @@
+html{color:#000;background:#FFF;}
+a{color:#00F;}
+a img{border:0px}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}
+li{list-style-type:none;}
+body{margin:0px;font:13px Helvetica}
+caption,th{text-align:left;}
+
+#root{margin:auto 10px;width:auto;}
+#content{width:100%;}
+#content{float:right;margin-left:-200px;}
+#content .border{margin-left:200px;}
+
+#add input[type='text'],#add textarea{width:100%; padding:2px;font:15px Helvetica;border:1px solid #888}
+#add label.inline{padding:0 10 0 3}
+#add label.label{display:block;margin:10 0 0 0;}
+
+.title{font-size:1.5em;font-weight:bold;float:left;}
+.title a{text-decoration:none;color:#000}
+.settings{float: right;}
+
+.name{padding:10px;margin-bottom:10px;background-color:#E6EAF9;}
+
+.left_active{background-color:#E6EAF9;}
+.left_active a{color:#000;text-decoration:none;}
+.left_unread{font-weight:bold;}
+.left p{padding:5px; margin:0px; width:190px;}
+
+.main_content{border:3px solid #E6EAF9;padding:12px;min-height:85%;webkit-border-radius:3px;}
+.main_content p{padding:5px;margin:10 0 5 0;background-color:#E6EAF9;}
+.main_content p span{float:right;}
+.main_content ul li{border-bottom:1px solid #ddd;padding-bottom:5px;margin-bottom:5px;}
+
+.header{padding:1em 0 2em 0;}
+
+img.icon{width:16px;height:16px;border:0px}

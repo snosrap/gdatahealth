@@ -47,7 +47,7 @@ def key_name():
 def parse_date(datestr):
     return datetime.datetime.fromtimestamp(tf_from_timestamp(datestr))
 
-def key_from_request(request, profileId=None, healthId=None, fileId=None):
+def key_from_request(request, profileId=None, healthId=None, fileId=None, get=False):
     account = get_auth_account(request)
     if profileId:
         profile_id_or_name = int(profileId) if profileId.isdigit() else profileId
@@ -63,7 +63,15 @@ def key_from_request(request, profileId=None, healthId=None, fileId=None):
             profile_key = db.Key.from_path('Account', account.key().id_or_name(), 'Profile', profile_id_or_name)
             return profile_key
     else:
-        return account.key()
+        return account if get else account.key()
+
+def profile_key_from_request(request, profileId=None):
+    account = get_auth_account(request)
+    if profileId:
+        profile_id_or_name = int(profileId) if profileId.isdigit() else profileId
+        return db.Key.from_path('Account', account.key().id_or_name(), 'Profile', profile_id_or_name)
+    else:
+        return Profile.all().ancestor(account).order('-created').fetch(limit=100)[0].key()
 
 # Internal Helpers
 

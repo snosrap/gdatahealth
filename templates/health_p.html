@@ -1,0 +1,131 @@
+<html>
+<head>
+	<title>GData Health</title>
+	<link rel="stylesheet" type="text/css" href="/static/health.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<!-- 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script> -->
+	<script type="text/javascript">
+	$(document).ready(function() {
+		//$('a.add').click(function(){$('#add').show();$('#category_item').val('asdf');});
+		$('.add_close').click(function(){$('#add').hide();});
+	});
+	</script>
+</head>
+<body>
+
+	
+	<div id="add" style="position:absolute;left:0px;top:0px;width:100%;height:100%;display:none;background:rgba(64, 64, 64, 0.5);">
+		<div id="add_child" style="margin:100 auto auto auto;background-color:white;padding:0px;border:10px solid #E6EAF9;width:400px;min-height:200px">
+			<img class="add_close" style="float:right;padding:5px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9oCGg8AFsWdgx4AAABpSURBVCjPYyyfuZuRgVjAwsjA0J7mQozSyll7mBhIAUxoujHNw64aIoEsjSmCUA13PZoiZF+huARNAwNGAKD7ElkaM6yY8HgL09PYwwTTSdjDBK4Uqwb0MMF0N+EwwSVCWsyzYPU7LgAAa4czvt1OUUgAAAAASUVORK5CYII=">
+			<form method="post" style="padding:10px">
+				<p class="name"><strong>Add <span class="add_title"></span></strong></p>
+				
+				<input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}">
+				<input type="hidden" name="action" value="add_health">
+				<input type="hidden" name="category_ccr" id="category_ccr">
+				<input type="hidden" name="ccr">
+				
+				<label for="category_item" class="label"><span class="add_title" /></label>
+				<input name="category_item" id="category_item" type="text">
+				
+				<!--label for="status" class="label">Status</label>
+				<input type="radio" name="status" id="status0" value="CURRENT" /><label for="status0" class="inline">Current</label>
+				<input type="radio" name="status" id="status1" value="RESOLVED" /><label for="status1" class="inline">Resolved</label-->
+				
+				<label for="ccr" class="label">CCR</label>
+				<textarea name="ccr" id="ccr" style="width:100%"></textarea>
+				
+				<!--label for="note" class="label">Notes</label>
+				<textarea name="note" id="note" style="width:100%"></textarea-->
+								
+				<p style="margin:50 0 0 0"><input type="submit" value="Add" /></p>
+			</form>
+		</div>
+	</div>
+	
+	<div id="root">
+		<div>
+			<p class="header">
+				<span class="title"><a href="/health/p">GData Health</a></span>
+				<span class="settings">{{ account.email }} | <a href="/health/p">Settings</a> | <a href="{{ logout_url }}">Sign out</a>
+			</p>
+		</div>
+		<div>
+			<div id="content">
+				<div class="border">
+					<div class="yui-g">
+						<div class="main_content">
+							{% if profileId %}
+								<h2 class="name">{{ profile.name }}
+								<a href="/health/feeds/profile/ui/{{ profile.key.id_or_name }}" title="Profile Feed"><img src="/static/rss.png" class="icon"></a>
+								<span style="float:right"><form method="post" style="display:inline;"><input type="submit" value="✘"><input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}"><input type="hidden" name="action" value="delete_profile"></form></span></span></h2>
+								{% for section in sections %}
+									<p>
+										<strong>{{ section.title }}</strong>
+        								<a href="/health/feeds/profile/ui/{{ profile.key.id_or_name }}/-/{{ section.category }}" title="Profile Feed of '{{ section.title }}'"><img src="/static/rss.png" class="icon"></a>
+										{% if is_editable %}<span><a href="/health/p" class="add" onclick="$('#add').show();$('#category_ccr').val('{{ section.category }}');$('.add_title').text('{{ section.title }}');return false;">Add</a></span>{% endif %}
+									</p>
+
+									<ul>
+										{% for x in section.entries %}
+											<li>
+												{% if is_editable %}<form method="post" style="display:inline;"><input type="submit" value="✘"><input type="hidden" name="health_id_or_name" value="{{ x.key.id_or_name }}"><input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}"><input type="hidden" name="action" value="delete_health"></form>{% endif %}
+												<a href="?page=summary&amp;profile={{ profileId }}&amp;topic={{ x.category_item|urlencode }}">{{ x.category_item }}</a>
+                                                <a href="/health/feeds/profile/ui/{{ profile.key.id_or_name }}/-/{http://schemas.google.com/health/ccr}{{ section.category }},{http://schemas.google.com/health/item}{{ x.category_item }}" title="Profile Feed of '{{ x.category_item }}' '{{ section.title }}'"><img src="/static/rss.png" class="icon"></a>
+											</li>
+										{% endfor %}
+									</ul>
+								{% endfor %}
+								
+								{% if is_editable %}
+									<p>
+    									<strong>Files</strong>
+    									<a href="/health/feeds/profile/ui/{{ profile.key.id_or_name }}/files" title="File Feed"><img src="/static/rss.png" class="icon"></a>
+                                    </p>
+									<ul>
+										{% for x in files %}
+											<li>
+												{% if is_editable %}<form method="post" style="display:inline;"><input type="submit" value="✘"><input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}"><input type="hidden" name="file_id_or_name" value="{{ x.key.id_or_name }}"><input type="hidden" name="action" value="delete_file"></form>{% endif %}
+												<a href="/health/feeds/profile/ui/{{ profile.key.id_or_name }}/files/{{ x.key.id_or_name }}/content">{{ x.title }}</a> {{ x.created|date }} ({{ x.file|default:""|length|filesizeformat }})
+												{% if x.description %}<br />{{ x.description }}{% endif %}
+											</li>
+										{% endfor %}
+										<form method="post" enctype="multipart/form-data" action="{{ request.url }}" style="display:inline;"><input type="file" name="file" onchange="this.form.submit();"><input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}"><input type="hidden" name="action" value="add_file"></form>
+									</ul>
+<!--
+									<p><strong>Link account</strong></p>
+									<ul>
+									{% if profile.gh_token %}
+										<li>
+											<form method="post" style="display:inline;"><input type="submit" value="✘"><input type="hidden" name="key" value="{{ profile.key }}"><input type="hidden" name="action" value="unlink"></form>
+											<a href="/health/p/link?profile={{ profileId }}">Refresh</a>
+										</li>
+									{% else %}
+										<li><a href="{{ auth_sub_url }}">Link to Google Health account</a></li>
+									{% endif %}	
+									</ul>
+-->
+								{% endif %}
+
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<p style="margin:10 0 10 0"><strong>Profiles</strong> <a href="/health/feeds/profile/list" title="Profile List Feed"><img src="/static/rss.png" class="icon"></a></p>
+			<div class="border left">
+				{% for x in profiles %}
+					<p {% ifequal profileId x.key.id_or_name %} class="left_active left_unread"{% endifequal %}>
+						<a href="?page=summary&amp;profile={{ x.key.id_or_name }}">{{ x.name }}</a>
+						{% if not is_editable %} (Shared){% endif %}
+					</p>
+				{% endfor %}
+				<p>&nbsp;</p>
+				Caring for someone?<br />
+				<form method="post" style="display:inline;"><input type="text" name="name" value="" placeholder="Name"><input type="hidden" name="action" value="add_profile"><input type="submit" value="Add another profile"></form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
