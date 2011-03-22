@@ -8,7 +8,7 @@
   <updated>{{ updated }}Z</updated>
 {% for file in files %}
   <entry>
-    <id>{{ request.path_url }}/{{ file.key }}</id>
+    <id>{{ request.path_url }}/{{ file.key.id_or_name }}</id>
     <title type="text">{{ file.title }}</title>
     {% if file.description %}<content type="text">{{ file.description }}</content>{% endif %}
 	{% if file.author %}<author><name>{{ file.author }}</name></author>{% endif %}
