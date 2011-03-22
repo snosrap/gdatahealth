@@ -71,7 +71,13 @@ class CreateAccount(webapp.RequestHandler):
             account = Account(email=self.request.get('Email'), passwd=hashlib.sha1(self.request.get('Passwd')).hexdigest(), name=self.request.get('Email'))
             account.put()
             profile = Profile(key_name=key_name(), parent=account, account=account, name=account.name, author=account.email).put()
-            render_template('CreateAccount.html', self, locals())
+            token = hashlib.sha512(uuid.uuid1().hex).hexdigest()
+            AccountToken(parent=account, account=account, token=token, service="health").put()
+            if self.request.scheme == "https":
+                self.response.headers['Set-Cookie'] = "SSID=%s; Path=/; Secure; HttpOnly" % token
+            elif self.request.scheme == "http":
+                self.response.headers['Set-Cookie'] = "HSID=%s; Path=/; HttpOnly" % token
+            self.redirect('/health/p')
         else:
             self.response.out.write('<p>Account creation failed.</p>')
 
