@@ -38,6 +38,12 @@ indexes:
   - name: created
     direction: desc
 
+- kind: Health
+  ancestor: yes
+  properties:
+  - name: created
+    direction: desc
+
 - kind: Profile
   properties:
   - name: account
@@ -54,6 +60,11 @@ indexes:
   - name: parent
   - name: created
     direction: desc
+
+- kind: Profile
+  ancestor: yes
+  properties:
+  - name: created
 
 - kind: Profile
   ancestor: yes
