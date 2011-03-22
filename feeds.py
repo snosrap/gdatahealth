@@ -8,6 +8,7 @@ from google.appengine.ext.webapp import util
 
 from time import gmtime, strftime
 import re
+import urllib
 
 import gdata
 import gdata.health
@@ -37,7 +38,7 @@ class ProfileFeed(webapp.RequestHandler):
         if self.request.get('q'):
             entries = entries.filter('category_item >=', self.request.get('q')).filter('category_item <', self.request.get('q') + u'\ufffd')
         if self.request.get('category') or categoryParam:
-            categoryParam = self.request.get('category') or categoryParam
+            categoryParam = self.request.get('category') or urllib.unquote(categoryParam)
             for category in categoryParam.split(','): # AND
                 categories = [parse_category(cat) for cat in category.split('|')] # OR
                 filter, value = make_filter(categories)
