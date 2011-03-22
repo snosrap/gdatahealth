@@ -50,7 +50,7 @@ class ServiceLoginAuth(webapp.RequestHandler):
                 self.response.headers['Set-Cookie'] = "SSID=%s; Path=/; Secure; HttpOnly" % token
             elif self.request.scheme == "http":
                 self.response.headers['Set-Cookie'] = "HSID=%s; Path=/; HttpOnly" % token
-            self.redirect('/health/feeds/profile/list')
+            self.redirect('/health/p')
 
 class Logout(webapp.RequestHandler):
     def get(self):
