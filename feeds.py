@@ -184,11 +184,11 @@ def main():
     application = webapp.WSGIApplication([
     
         ('/health/feeds/register/ui/([\w.]+)', RegisterFeed),
-        ('/health/feeds/register/ui/([\w.]+)/-/([\w.]+)', RegisterFeed),
+        ('/health/feeds/register/ui/([\w.]+)/-/(.+)', RegisterFeed),
         ('/health/feeds/register/ui/([\w.]+)/([\w.]+)', RegisterEntry),
         
         ('/health/feeds/profile/ui/([\w.]+)', ProfileFeed),
-        ('/health/feeds/profile/ui/([\w.]+)/-/([\w.]+)', ProfileFeed),
+        ('/health/feeds/profile/ui/([\w.]+)/-/(.+)', ProfileFeed),
         ('/health/feeds/profile/ui/([\w.]+)/([\w.]+)', ProfileEntry),
         
         ('/health/feeds/profile/list', ProfileListFeed),
