@@ -15,6 +15,9 @@ class ProfilePage(webapp.RequestHandler):
 
     def get(self):
         account = key_from_request(self.request, get=True)
+        if not account:
+            self.redirect('/accounts/ServiceLogin')
+            return
         profiles = Profile.all().ancestor(account).order('-created').fetch(limit=100)
         profileId = self.request.get('profile') or profiles[0].key().id_or_name()
         profile = [x for x in profiles if x.key().id_or_name() == profileId][0]
