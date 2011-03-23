@@ -18,18 +18,29 @@ handlers:
 
 - url: /health/feeds/.*/files.*
   script: files.py
+  secure: always
 
 - url: /health/feeds/.*
   script: feeds.py
+  secure: always
 
 - url: /health/p.*
   script: profiles.py
+  secure: always
 
-- url: /admin
-  script: admin.py
+- url: /health/ref.*
+  script: ref.py
+  secure: always
 
 - url: /accounts.*
   script: accounts.py
+  secure: always
+
+- url: /admin
+  script: admin.py
+  secure: always
+  login: admin
   
 - url: .*
   script: main.py
+  secure: always
