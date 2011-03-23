@@ -10,20 +10,6 @@ import base64
 from feed.date.rfc3339 import tf_from_timestamp
 from time import gmtime, strftime
 
-# Decorators
-
-def administrator(method):
-    @functools.wraps(method)
-    def wrapper(self, *args, **kwargs):
-        user = users.get_current_user()
-        if not user:
-            self.redirect(users.create_login_url(self.request.uri))
-        elif not users.is_current_user_admin():
-            self.redirect(users.create_logout_url(self.request.uri))
-        else:
-            return method(self, *args, **kwargs)
-    return wrapper
-
 # Helpers
 
 def minimize(s):

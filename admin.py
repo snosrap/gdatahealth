@@ -10,7 +10,6 @@ import hashlib
 import uuid
 
 class Admin(webapp.RequestHandler):
-    @administrator
     def get(self):
         accounts = Account.all()
         tokens = AccountToken.all()
@@ -21,7 +20,6 @@ class Admin(webapp.RequestHandler):
         files = File.all()
         render_template('admin.html', self, locals())
 
-    @administrator
     def post(self):
         if self.request.get('model') == 'Account':
             if self.request.get('key'):
