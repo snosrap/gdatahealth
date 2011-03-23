@@ -20,12 +20,36 @@
             .red{color:red}
             .blue{color:blue}
             .g{color:green}
+            #ServiceLogin{float:right;background-color:#fff;width:300px;padding:10px;text-align:center;border:10px solid #eef}
     	</style>
     </head>
     <body>
         <h2><a href="/">GData Health</a></h2>
         <p class="subtitle">The Google Health API on App Engine</p>
         
+        <div id="ServiceLogin">
+            <p>Sign in with your<br /><b>GData Health</b> account</p>
+        	<form id="form" name="form" action="/accounts/ServiceLoginAuth" method="POST">
+                <input type="hidden" name="service" value="health" />
+        	    <table>
+        	    	<tr>
+        	    		<th><label for="Email">Email</label></th>
+        	    		<td><input type="email" name="Email" id="Email" /></td>
+        	    	</tr>
+        	    	<tr>
+        	    		<th><label for="Passwd">Password</label></th>
+        	    		<td><input type="password" name="Passwd" id="Passwd" /></td>
+        	    	</tr>
+        	    	<tr>
+        	    		<th>&nbsp;</th>
+        	    		<td><input type="submit" value="Sign in" /></td>
+        	    	</tr>
+        	    </table>
+        	</form>
+        	<p>Not using GDataHealth?<br />
+        	<a href="/accounts/NewAccount">Create a new account now</a></p>
+        </div>
+
         <h3>Overview</h3>
         
         <p><b>GData Health</b> is an open-source implementation of the <a href="http://code.google.com/apis/health/docs/2.0/reference.html">Google Health GData API</a>, running on Google App Engine.</p>
