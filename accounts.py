@@ -54,8 +54,8 @@ class ServiceLoginAuth(webapp.RequestHandler):
 
 class Logout(webapp.RequestHandler):
     def get(self):
-        self.response.headers['Set-Cookie'] = "SSID=X; Expires=Thu, 01-Jan-1970 00:00:01 GMT; Path=/; HttpOnly"
-        self.response.headers['Set-Cookie'] = "HSID=X; Expires=Thu, 01-Jan-1970 00:00:01 GMT; Path=/; HttpOnly"
+        self.response.headers.add_header('Set-Cookie', "SSID=X; Expires=Thu, 01-Jan-1970 00:00:01 GMT; Path=/; Secure; HttpOnly")
+        self.response.headers.add_header('Set-Cookie', "HSID=X; Expires=Thu, 01-Jan-1970 00:00:01 GMT; Path=/; HttpOnly")
         self.redirect('/')
 
 class NewAccount(webapp.RequestHandler):
