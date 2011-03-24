@@ -37,6 +37,11 @@ class Health(db.Expando):
     created = db.DateTimeProperty(auto_now_add=True)
     updated = db.DateTimeProperty(auto_now=True)
 
+class Reference(db.Model):
+    category_ccr = db.CategoryProperty() # MEDICATION
+    category_item = db.CategoryProperty() # Captopril
+    category_item_kwds = db.StringListProperty() # captopril, i.e., lowercase keywords for a search
+
 # TODO:
 
 class HealthNote(db.Model):

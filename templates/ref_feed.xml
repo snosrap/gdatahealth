@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>{{ request.path_url }}</id>
+  <title type="text">Reference Feed</title>
+  <link href="{{ request.path_url }}" rel="http://schemas.google.com/g/2005#feed" type="application/atom+xml" />
+  <link href="{{ request.path_url }}" rel="http://schemas.google.com/g/2005#post" type="application/atom+xml" />
+  <link href="{{ request.path_url }}" rel="self" type="application/atom+xml" />
+  <updated>{{ updated }}Z</updated>
+  {{ refs }}
+{% for ref in refs %}
+  <entry>
+    <category term="{{ ref.category_ccr }}" />
+    <category scheme="http://schemas.google.com/health/item" term="{{ ref.category_item }}" />
+    <category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/health/kinds#profile" />
+    <id>{{ request.path_url }}/{{ ref.key.id_or_name }}</id>
+    <title type="text">{{ ref.category_item }}</title>
+    <link href="{{ request.path_url }}/{{ ref.key.id_or_name }}" rel="self" type="application/atom+xml" />
+  </entry>
+{% endfor %}
+</feed>
