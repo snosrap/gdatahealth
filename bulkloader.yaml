@@ -1,0 +1,39 @@
+python_preamble:
+- import: base64
+- import: re
+- import: google.appengine.ext.bulkload.transform
+- import: google.appengine.ext.bulkload.bulkloader_wizard
+- import: google.appengine.ext.db
+- import: google.appengine.api.datastore
+- import: google.appengine.api.users
+- import: models
+
+transformers:
+- kind: Reference
+  connector: csv
+
+  connector_options:
+    column_list:
+      - category_ccr
+      - category_item
+      - category_item_kwds
+      
+    import_options:
+      delimiter: "|"
+
+  property_map:
+    - property: __key__
+      external_name: key
+      export_transform: transform.key_id_or_name_as_string
+ 
+    - property: category_ccr
+      external_name: category_ccr
+      import_transform: transform.none_if_empty(str)
+ 
+    - property: category_item
+      external_name: category_item
+      import_transform: transform.none_if_empty(str)
+      
+    - property: category_item_kwds
+      external_name: category_item_kwds
+      import_transform: transform.regexp_to_list("(\w+)")
