@@ -15,9 +15,9 @@
     <link href="{{ request.path_url }}/-/{{ entry.category_ccr|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fhealth%2Fitem%7D{{ entry.category_item|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fg%2F2005%23kind%7D{{ entry.category_kind|urlencode }}" rel="http://schemas.google.com/health/data#complete" type="application/atom+xml" />
     <link href="{{ request.path_url }}" rel="self" type="application/atom+xml" />
     <link href="{{ request.path_url }}" rel="edit" type="application/atom+xml" />
-    <metadata:ProfileMetaData xmlns:metadata="http://schemas.google.com/health/metadata">
+    {% if entry.healthentrynote_set %}<metadata:ProfileMetaData xmlns:metadata="http://schemas.google.com/health/metadata">
     {% for note in entry.healthentrynote_set %}
         <UserComment type="text" src="IRI" key="{{ note.key.id_or_name }}" updated="{{ note.updated }}">{{ note.text|escape }}</UserComment>
     {% endfor %}
-    </metadata:ProfileMetaData>
+    </metadata:ProfileMetaData>{% endif %}
 </entry>
