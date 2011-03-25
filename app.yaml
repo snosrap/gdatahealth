@@ -39,11 +39,6 @@ handlers:
 - url: /accounts.*
   script: accounts.py
   secure: always
-
-- url: /admin
-  script: admin.py
-  secure: always
-  login: admin
   
 - url: .*
   script: main.py
