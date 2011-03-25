@@ -57,7 +57,7 @@ def profile_key_from_request(request, profileId=None):
         profile_id_or_name = int(profileId) if profileId.isdigit() else profileId
         return db.Key.from_path('Account', account.key().id_or_name(), 'Profile', profile_id_or_name)
     else:
-        return Profile.all().ancestor(account).order('-created').fetch(limit=100)[0].key()
+        return Profile.all(keys_only=True).ancestor(account).order('-created').fetch(limit=1)[0]
 
 # Category Helpers
 
