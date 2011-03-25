@@ -92,19 +92,17 @@
 										{% endfor %}
 										<form method="post" enctype="multipart/form-data" action="{{ request.url }}" style="display:inline;"><input type="file" name="file" onchange="this.form.submit();"><input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}"><input type="hidden" name="action" value="add_file"></form>
 									</ul>
-<!--
 									<p><strong>Link account</strong></p>
 									<ul>
 									{% if profile.gh_token %}
 										<li>
-											<form method="post" style="display:inline;"><input type="submit" value="✘"><input type="hidden" name="key" value="{{ profile.key }}"><input type="hidden" name="action" value="unlink"></form>
+											<form method="post" style="display:inline;"><input type="submit" value="✘"><input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}"><input type="hidden" name="action" value="unlink_profile"></form>
 											<a href="/health/p/link?profile={{ profileId }}">Refresh</a>
 										</li>
 									{% else %}
 										<li><a href="{{ auth_sub_url }}">Link to Google Health account</a></li>
 									{% endif %}	
 									</ul>
--->
 								{% endif %}
 
 							{% endif %}
