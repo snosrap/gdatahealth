@@ -140,21 +140,6 @@ class ProfileListEntry(webapp.RequestHandler):
 
 # Helpers
 
-def parse_category(cat):
-    defaults = {'neg':'', 'ns':"http://schemas.google.com/health/ccr", 'term':''}
-    match = re.match("(?P<neg>[-])?({(?P<ns>[^}]*)})?(?P<term>.*)", cat)
-    return [match.group(x) or defaults[x] for x in ["neg", "ns", "term"]]
-
-def column_for_namespace(ns):
-    return "category_%s" % (ns[1].split('/')[-1])
-
-def make_filter(categories):
-    if len(categories) == 1:
-        category = categories[0]
-        return ("%s %s=" % (column_for_namespace(category), category[0].replace('-', '!')), category[2])
-    else:
-        return ("%s IN" % (column_for_namespace(categories[0])), [cat[2] for cat in categories]) # Only allow one column for an OR
-
 def handle_health(request, profileId):
 
     profile_key = key_from_request(request, profileId)

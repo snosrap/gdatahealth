@@ -11,9 +11,9 @@
     <category term="{{ ref.category_ccr }}" />
     <category scheme="http://schemas.google.com/health/item" term="{{ ref.category_item }}" />
     <category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/health/kinds#profile" />
-    <id>{{ request.path_url }}/{{ ref.key.id_or_name }}</id>
+    <id>{{ request.path_url }}/{{ ref.category_item|urlencode }}</id>
     <title type="text">{{ ref.category_item }}</title>
-    <link href="{{ request.path_url }}/{{ ref.key.id_or_name }}" rel="self" type="application/atom+xml" />
+    <link href="{{ request.path_url }}/{{ ref.category_item|urlencode }}" rel="self" type="application/atom+xml" />
   </entry>
 {% endfor %}
 </feed>
