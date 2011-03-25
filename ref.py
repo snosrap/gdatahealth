@@ -23,7 +23,7 @@ class ReferenceFeed(webapp.RequestHandler):
                 refs = refs.filter(filter, value)
 
         if q:
-            refs = refs.filter('category_item_kwds =', q)
+            refs = refs.filter('category_item_kwds =', q.lower())
 
         refs = refs.order('category_ccr').order('category_item')
         refs = refs.fetch(limit=int(self.request.get('max-results', '10')), offset=int(self.request.get('start-index', '1')) - 1)
