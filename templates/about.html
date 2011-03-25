@@ -107,6 +107,11 @@
         		<td><span class="g">GET</span></td>
         		<td>Enables <a href="http://code.google.com/p/gdata-issues/issues/detail?id=616">attachment support (issue: 616)</a></td>
         	</tr>
+        	<tr>
+        		<td><span class="g">/ref</span></td>
+        		<td><span class="g">GET</span></td>
+        		<td>Enables <a href="http://code.google.com/p/gdata-issues/issues/detail?id=703">reference support 703</a></td>
+        	</tr>
         </table>
         
         
@@ -217,6 +222,12 @@ Multipart Content
 --END_OF_PART--
 </pre></p>
         
+        <h4>Reference</h4>
+        <pre>$ curl "https://gdatahealth.appspot.com/health/feeds/<span class="blue">ref</span>"</pre>
+
+        <h4>Reference with Category and Query</h4>
+        <pre>$ curl "https://gdatahealth.appspot.com/health/feeds/<span class="blue">ref/-/MEDICATION?q=Tylenol"</pre>
+
         <p>&nbsp;</p>
         
     </body>
