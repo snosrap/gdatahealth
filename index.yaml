@@ -85,10 +85,17 @@ indexes:
 
 - kind: Reference
   properties:
-  - name: category_item=
+  - name: category_ccr
   - name: category_item
 
 - kind: Reference
   properties:
-  - name: category_item_kwds=
+  - name: category_ccr
+  - name: category_item_kwds
+  - name: category_item
+
+- kind: Reference
+  properties:
+  - name: category_item_kwds
+  - name: category_ccr
   - name: category_item
