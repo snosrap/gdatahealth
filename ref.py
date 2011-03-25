@@ -32,8 +32,8 @@ class ReferenceFeed(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/health/ref', ReferenceFeed),
-        ('/health/ref/-/(.+)', ReferenceFeed),
+        ('/health/feeds/ref', ReferenceFeed),
+        ('/health/feeds/ref/-/(.+)', ReferenceFeed),
 
     ], debug=True)
     util.run_wsgi_app(application)

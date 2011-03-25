@@ -24,16 +24,16 @@ handlers:
   script: files.py
   secure: always
 
+- url: /health/feeds/ref.*
+  script: ref.py
+  secure: always
+
 - url: /health/feeds/.*
   script: feeds.py
   secure: always
 
 - url: /health/p.*
   script: profiles.py
-  secure: always
-
-- url: /health/ref.*
-  script: ref.py
   secure: always
 
 - url: /accounts.*
