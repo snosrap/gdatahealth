@@ -81,6 +81,7 @@
 									<p>
     									<strong>Files</strong>
     									<a href="/health/feeds/profile/ui/{{ profile.key.id_or_name }}/files" title="File Feed"><img src="/static/rss.png" class="icon"></a>
+    									<a href="mailto:{{ profile.key }}@gdatahealth.appspotmail.com" title="Health Email Address -- Files emailed to this address will be added to the File Feed."><img src="/static/email_attach.png" class="icon"></a>
                                     </p>
 									<ul>
 										{% for x in files %}
