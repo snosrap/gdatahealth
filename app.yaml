@@ -6,6 +6,9 @@ api_version: 1
 builtins:
 - remote_api: on
 - datastore_admin: on
+
+inbound_services:
+- mail
   
 handlers:
 
@@ -39,6 +42,10 @@ handlers:
 - url: /accounts.*
   script: accounts.py
   secure: always
+
+- url: /_ah/mail/.+
+  script: mail.py
+  login: admin
   
 - url: .*
   script: main.py
