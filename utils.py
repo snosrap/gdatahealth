@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
+import functools, re, uuid, base64
+
 from models import *
+
+from google.appengine.dist import use_library
+use_library('django', '1.2')
+
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
-import functools
-import re
-import uuid
-import base64
+
 from feed.date.rfc3339 import tf_from_timestamp
 from time import gmtime, strftime
 
