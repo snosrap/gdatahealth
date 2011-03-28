@@ -1,0 +1,25 @@
+<ContinuityOfCareRecord xmlns="urn:astm-org:CCR">
+  <Body>
+    <Results>
+      <Result>
+        <Test>
+          <DateTime>
+            <Type>
+              <Text>{{ datetimetype|default:"Collection start date" }}</Text>
+            </Type>
+            <ExactDateTime>{{ exactdatetime|default:updated }}</ExactDateTime>
+          </DateTime>
+          <Description>
+            <Text>{{ description }}</Text>
+          </Description>
+          <TestResult>
+            <Value>{{ value }}</Value>
+            <Units>
+              <Unit>{{ unit }}</Unit>
+            </Units>
+          </TestResult>
+        </Test>
+      </Result>
+    </Results>
+  </Body>
+</ContinuityOfCareRecord>

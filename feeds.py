@@ -144,6 +144,8 @@ def handle_health(request, profileId):
 
     profile_key = key_from_request(request, profileId)
     account_key = profile_key.parent()
+
+    healths = []
     
     if request.headers['Content-Type'].startswith("application/atom+xml"):
         entry = gdata.health.ProfileEntryFromString(request.body)            
@@ -152,8 +154,6 @@ def handle_health(request, profileId):
         category_paths = {'CONDITION':'./Body/Problems','MEDICATION':'./Body/Medications','ALLERGY':'./Body/Alerts','LABTEST':'./Body/Results','PROCEDURE':'./Body/Procedures','IMMUNIZATION':'./Body/Immunizations'}
         category_item_paths = {'CONDITION':'./Description/Text','MEDICATION':'./Product/ProductName/Text','ALLERGY':'./Description/Text','LABTEST':'./Test/Description/Text','PROCEDURE':'./Description/Text','IMMUNIZATION':'./Product/ProductName/Text'}
         
-        healths = []
-        
         for category_ccr in category_paths:
             for element in tree.find(category_paths[category_ccr].replace('/', '/{urn:astm-org:CCR}')) or []:
                 category_item = element.find(category_item_paths[category_ccr].replace('/', '/{urn:astm-org:CCR}')).text
@@ -161,8 +161,18 @@ def handle_health(request, profileId):
                 child = ElementTree.tostring(element).replace('ns0:', '').replace(':ns0', '')
                 ccr = "<ContinuityOfCareRecord xmlns='urn:astm-org:CCR'><Body><%s>%s</%s></Body></ContinuityOfCareRecord>" % (parent, child, parent)
                 healths.append(Health(key_name=key_name(), parent=profile_key, account=account_key, profile=profile_key, category_ccr=category_ccr, category_item=category_item, ccr=ccr))
-        
-        return healths
+
+    elif request.headers['Content-Type'].startswith("application/x-www-form-urlencoded"):
+        category_ccr = request.get('category_ccr') or request.get('category')
+        category_item = request.get('category_item') or request.get('description')
+        if category_ccr == 'LABTEST':
+            description = category_item
+            value = request.get('value')
+            unit = request.get('unit')
+            ccr = return_template('ccr/LABTEST.xml', request, locals())
+            healths.append(Health(key_name=key_name(), parent=profile_key, account=account_key, profile=profile_key, category_ccr=category_ccr, category_item=category_item, ccr=ccr))
+
+    return healths
 
 # Routes
 
