@@ -50,7 +50,7 @@ class ServiceLoginAuth(webapp.RequestHandler):
                 self.response.headers['Set-Cookie'] = "SSID=%s; Path=/; Secure; HttpOnly" % token
             elif self.request.scheme == "http":
                 self.response.headers['Set-Cookie'] = "HSID=%s; Path=/; HttpOnly" % token
-            self.redirect('/health/p')
+            self.redirect(self.request.get('continue') or '/health/p')
 
 class Logout(webapp.RequestHandler):
     def get(self):
@@ -81,6 +81,24 @@ class CreateAccount(webapp.RequestHandler):
         else:
             self.response.out.write('<p>Account creation failed.</p>')
 
+class EditPasswd(webapp.RequestHandler):
+    def get(self):
+        account = key_from_request(self.request, get=True)
+        if account:
+            render_template('EditPasswd.html', self, locals())
+        else:
+            self.redirect('/accounts/ServiceLogin?continue=%s' % self.request.path_url)
+
+class UpdatePasswd(webapp.RequestHandler):
+    def post(self):
+        account = key_from_request(self.request, get=True)
+        if self.request.get('Passwd') == self.request.get('PasswdAgain') and account.passwd == hashlib.sha1(self.request.get('OldPasswd')).hexdigest():
+            account.passwd = hashlib.sha1(self.request.get('Passwd')).hexdigest()
+            account.put()
+            self.redirect('/health/p')
+            return
+        self.redirect('/accounts/EditPasswd?failed=1')
+
 def main():
     application = webapp.WSGIApplication([
         # http://code.google.com/apis/health/docs/2.0/reference.html#Authentication
@@ -90,6 +108,8 @@ def main():
         ('/accounts/Logout', Logout),
         ('/accounts/NewAccount', NewAccount),
         ('/accounts/CreateAccount', CreateAccount),
+        ('/accounts/EditPasswd', EditPasswd),
+        ('/accounts/UpdatePasswd', UpdatePasswd),
     ], debug=True)
     util.run_wsgi_app(application)
 

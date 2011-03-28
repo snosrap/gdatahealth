@@ -11,6 +11,7 @@
     </head>
     <body>
     	<form id="form" name="form" action="ServiceLoginAuth" method="POST">
+            {% if request.GET.continue %}<input type="hidden" name="continue" value="{{ request.GET.continue|escape }}" />{% endif %}
             <input type="hidden" name="service" value="health" />
     	    <table>
     	    	<tr>

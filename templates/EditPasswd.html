@@ -1,0 +1,35 @@
+<html>
+    <head>
+    	<title>Change password</title>
+    	<link rel="stylesheet" type="text/css" href="/static/health.css">
+    	<style>
+            body,input{font-family:Helvetica;font-size:16px;}
+            th{text-align:left;}
+            input{width:200px;}
+            table,td{padding:5px;}
+    	</style>
+    </head>
+    <body>
+        <h2>Change password</h2>
+    	<form id="form" name="form" action="UpdatePasswd" method="POST">
+    	    <table>
+    	    	<tr>
+    	    		<th><label for="OldPasswd">Current password:</label></th>
+    	    		<td><input type="password" name="OldPasswd" id="OldPasswd" /></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<th><label for="Passwd">New password:</label></th>
+    	    		<td><input type="password" name="Passwd" id="Passwd" /></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<th><label for="PasswdAgain">Confirm new password:</label></th>
+    	    		<td><input type="password" name="PasswdAgain" id="PasswdAgain" /></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<th>&nbsp;</th>
+    	    		<td><input type="submit" value="Save" /></td>
+    	    	</tr>
+    	    </table>        	
+    	</form>
+    </body>
+</html>
