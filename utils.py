@@ -18,6 +18,11 @@ from time import gmtime, strftime
 def minimize(s):
     return s#re.sub(">[\s]+<", "><", s)
 
+def return_template(template_path, request, values):
+    values['updated'] = strftime("%Y-%m-%dT%H:%M:%S", gmtime())
+    values['request'] = request
+    return minimize(template.render('templates/' + template_path, values))
+
 def render_template(template_path, handler, values, content_type=None):
     if not content_type:
         if template_path.endswith(".xml"):
