@@ -10,7 +10,7 @@
     </author>
     <updated>{{ entry.updated }}</updated>
     <published>{{ entry.created }}</published>
-    {% if entry.ccr %}{{ entry.ccr }}{% endif %}
+    {% if entry.ccr %}{% autoescape off %}{{ entry.ccr }}{% endautoescape %}{% endif %}
     <title type="text">{{ entry.category_item }}</title>
     <link href="{{ request.path_url }}/-/{{ entry.category_ccr|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fhealth%2Fitem%7D{{ entry.category_item|urlencode }}/%7Bhttp%3A%2F%2Fschemas.google.com%2Fg%2F2005%23kind%7D{{ entry.category_kind|urlencode }}" rel="http://schemas.google.com/health/data#complete" type="application/atom+xml" />
     <link href="{{ request.path_url }}" rel="self" type="application/atom+xml" />
