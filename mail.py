@@ -21,6 +21,24 @@ class NewUserHandler(InboundMailHandler):
             account.put()
             Profile(key_name=key_name(), parent=account, account=account, name=account.name, author=account.email).put()
 
+            mail.send_mail(sender="GData Health <noreply@gdatahealth.appspotmail.com>",
+              to=new_account_email,
+              subject="GData Health Account",
+              body="""
+Hi.
+
+We've created a new GData Health account for you based on information sent to us by %s.
+
+You can access your account by browsing to https://gdatahealth.appspot.com/health/p and logging in using the following credentials:
+
+Email: %s
+Password: %s
+
+Thanks!
+
+""" % (mail_message.sender, new_account_email, new_password))
+
+
 class MailHandler(InboundMailHandler):
     def receive(self, mail_message):
         profile_key = re.findall('\/_ah\/mail\/(.+)%40gdatahealth.appspotmail.com', self.request.path).pop()
