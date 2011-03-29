@@ -17,7 +17,7 @@
 	<div id="add" style="position:absolute;left:0px;top:0px;width:100%;height:100%;display:none;background:rgba(64, 64, 64, 0.5);">
 		<div id="add_child" style="margin:100 auto auto auto;background-color:white;padding:0px;border:10px solid #E6EAF9;width:400px;min-height:200px">
 			<img class="add_close" style="float:right;padding:5px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9oCGg8AFsWdgx4AAABpSURBVCjPYyyfuZuRgVjAwsjA0J7mQozSyll7mBhIAUxoujHNw64aIoEsjSmCUA13PZoiZF+huARNAwNGAKD7ElkaM6yY8HgL09PYwwTTSdjDBK4Uqwb0MMF0N+EwwSVCWsyzYPU7LgAAa4czvt1OUUgAAAAASUVORK5CYII=">
-			<form method="post" action="/health/feeds/profile/ui/{{ profile.key.id_or_name }}" style="padding:10px">
+			<form method="post" action="/health/feeds/profile/ui/{{ profile.key.id_or_name }}?continue={{ request.url|urlencode }}" style="padding:10px">
 				<p class="name"><strong>Add <span class="add_title"></span></strong></p>
 				
 				<input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}">

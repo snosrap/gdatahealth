@@ -56,7 +56,7 @@ class ProfileFeed(webapp.RequestHandler):
             entry = healths[0]
             entry.put()
             request = self.request
-            render_template('profile_ui_entry.xml', self, locals())
+            self.redirect(self.request.get('continue')) if self.request.get('continue') else render_template('profile_ui_entry.xml', self, locals())
             
     def put(self, profileId):
         self.post(profileId)
@@ -71,7 +71,7 @@ class ProfileEntry(webapp.RequestHandler):
         entry = handle_health(self.request, profileId)[0]
         entry.__key__ = key_from_request(self.request, profileId, entryId)
         entry.put()
-        render_template('profile_ui_entry.xml', self, locals())
+        self.redirect(self.request.get('continue')) if self.request.get('continue') else render_template('profile_ui_entry.xml', self, locals())
         
     def put(self, profileId, entryId):
         self.post(profileId, entryId)
