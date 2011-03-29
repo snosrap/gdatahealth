@@ -99,7 +99,6 @@
 										<form method="post" enctype="multipart/form-data" action="{{ request.url }}" style="display:inline;"><input type="file" name="file" onchange="this.form.submit();"><input type="hidden" name="profile_id_or_name" value="{{ profile.key.id_or_name }}"><input type="hidden" name="action" value="add_file"></form>
 									</ul>
 
-                                    {% ifequal request.scheme "http" %}
 									<p><strong>Link account</strong></p>
 									<ul>
 									{% if profile.gh_token %}
@@ -111,7 +110,6 @@
 										<li><a href="{{ auth_sub_url }}">Link to Google Health account</a></li>
 									{% endif %}	
 									</ul>
-									{% endifequal %}
 
 								{% endif %}
 
